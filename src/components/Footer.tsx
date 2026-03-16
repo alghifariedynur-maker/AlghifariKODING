@@ -23,7 +23,7 @@ export default function Footer() {
           >
             <span>© {currentYear} Made with</span>
             <Heart className="h-4 w-4 text-destructive fill-destructive" />
-            <span>by Developer</span>
+            <span>by Alghifari E.D</span>
           </motion.div>
 
           <motion.div
