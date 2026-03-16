@@ -21,18 +21,21 @@ const contactInfo = [
     label: 'Email',
     value: 'hello@developer.com',
     href: 'mailto:hello@developer.com',
+    target: '_blank',
   },
   {
     icon: Phone,
     label: 'Telepon',
     value: '+62 812 3456 7890',
     href: 'tel:+6281234567890',
+    target: '_blank',
   },
   {
     icon: MapPin,
     label: 'Lokasi',
     value: 'Jakarta, Indonesia',
     href: '#',
+    target: '_blank',
   },
 ];
 
