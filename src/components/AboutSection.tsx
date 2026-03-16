@@ -57,15 +57,14 @@ export default function AboutSection() {
               Passionate Developer &amp; Creator
             </h3>
             <p className="text-muted-foreground leading-relaxed">
-              Saya adalah seorang Fullstack Web Developer dengan passion yang kuat dalam menciptakan 
-              solusi digital yang inovatif. Dengan pengalaman lebih dari 5 tahun, saya telah 
-              membantu berbagai klien dan perusahaan dalam mewujudkan ide-ide mereka menjadi 
-              aplikasi web yang powerful dan user-friendly.
+              Saya adalah seorang Siswa Man 1 Banda Aceh,Saya adalah atlet taekwondo.
+              cita cita saya ingin menjadi ABDI NEGARA khususnya di bidang imigrasi.
+
             </p>
             <p className="text-muted-foreground leading-relaxed">
-              Selain coding, saya juga aktif sebagai Content Creator, berbagi pengetahuan 
-              tentang pemrograman dan teknologi melalui berbagai platform. Saya percaya bahwa 
-              berbagi ilmu adalah cara terbaik untuk terus belajar dan berkembang.
+             tapi saya juga suka belajar lewat computer,dan jujur saya tertarik dengan mapel cooding,
+             oleh karena itu saya menerapkan pola pikir "jangan stuck di satu posisi dan coba pikir posisi yg lain"
+             jadi saya tidak fokus pada satu titik tapi saya mencoba memikirkan titik yang.
             </p>
             <div className="grid grid-cols-2 gap-4 pt-4">
               {stats.map((stat, index) => (
