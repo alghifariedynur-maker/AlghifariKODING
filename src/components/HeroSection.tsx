@@ -1,176 +1,168 @@
-import { motion } from 'framer-motion';
-import { ArrowDown, Github, Linkedin, Youtube, Instagram } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import ThreeScene from './ThreeScene';
+import { motion } from "framer-motion";
+import { ArrowDown, Github, Linkedin, Youtube, Instagram } from "lucide-react";
+import ThreeScene from "./ThreeScene";
 
 export default function HeroSection() {
-  const scrollToAbout = () => {
-    const element = document.querySelector('#about');
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+
+  const scrollTo = (id) => {
+    const element = document.querySelector(id);
+    if (!element) {
+      console.warn(`${id} tidak ditemukan`);
+      return;
+    }
+    element.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const socials = [
+    { icon: Github, href: "https://github.com/yourusername", label: "GitHub" },
+    { icon: Linkedin, href: "https://linkedin.com/in/yourusername", label: "LinkedIn" },
+    { icon: Youtube, href: "https://youtube.com/@yourchannel", label: "YouTube" },
+    { icon: Instagram, href: "https://instagram.com/yourusername", label: "Instagram" },
+  ];
+
+  const handleImageError = (e) => {
+    e.currentTarget.style.display = "none";
+    const fallback = e.currentTarget.nextElementSibling;
+    if (fallback) {
+      fallback.classList.remove("hidden");
+      fallback.classList.add("flex");
     }
   };
 
   return (
     <section
       id="home"
-      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-hero"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-black via-gray-900 to-black text-white"
     >
+      {/* Background 3D */}
       <ThreeScene />
 
       <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-center gap-12">
 
-          {/* ─── LEFT: Photo ─── */}
+          {/* LEFT */}
           <motion.div
             initial={{ opacity: 0, x: -60 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.9, ease: 'easeOut' }}
-            className="flex-shrink-0 flex flex-col items-center"
+            transition={{ duration: 0.9 }}
+            className="flex flex-col items-center"
           >
-            {/* Glowing ring wrapper */}
             <div className="relative">
-              {/* Animated gradient ring */}
+
+              {/* Glow ring */}
               <motion.div
-                className="absolute -inset-1 rounded-full bg-gradient-to-tr from-primary via-purple-500 to-pink-500 opacity-70 blur-sm"
+                className="absolute -inset-1 rounded-full bg-gradient-to-tr from-purple-500 via-pink-500 to-blue-500 opacity-70 blur-sm"
                 animate={{ rotate: 360 }}
-                transition={{ duration: 8, repeat: Infinity, ease: 'linear' }}
+                transition={{ duration: 12, repeat: Infinity, ease: "linear" }}
               />
 
-              {/* Photo container */}
-              <div className="relative w-56 h-56 md:w-72 md:h-72 rounded-full overflow-hidden border-4 border-background shadow-2xl">
+              {/* Image */}
+              <div className="relative w-56 h-56 md:w-72 md:h-72 rounded-full overflow-hidden border-4 border-gray-800 shadow-2xl">
                 <img
-                  src="/FOTOKU.jpg"   /* ← ganti dengan path foto Anda */
-                  alt="Foto Profil Alghi"
+                  src="/FOTOKU.jpg"
+                  alt="Foto Profil"
                   className="w-full h-full object-cover"
-                  onError={(e) => {
-                    /* Fallback avatar bila foto belum ada */
-                    e.currentTarget.style.display = 'none';
-                    e.currentTarget.nextElementSibling.style.display = 'flex';
-                  }}
+                  onError={handleImageError}
                 />
-                {/* Fallback avatar initials */}
-                <div
-                  className="hidden w-full h-full bg-gradient-to-br from-primary/30 to-purple-600/30 items-center justify-center"
-                  style={{ display: 'none' }}
-                >
-                  <span className="text-6xl font-bold text-primary select-none">A</span>
+
+                {/* Fallback */}
+                <div className="hidden w-full h-full bg-gradient-to-br from-purple-500/30 to-blue-500/30 items-center justify-center">
+                  <span className="text-6xl font-bold text-white">A</span>
                 </div>
               </div>
 
               {/* Online badge */}
               <motion.span
-                className="absolute bottom-4 right-4 w-5 h-5 bg-green-400 rounded-full border-2 border-background shadow-lg"
+                className="absolute bottom-4 right-4 w-5 h-5 bg-green-400 rounded-full border-2 border-black"
                 animate={{ scale: [1, 1.3, 1] }}
                 transition={{ duration: 2, repeat: Infinity }}
               />
             </div>
 
-            {/* Social icons below photo */}
+            {/* Social */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 1 }}
-              className="flex items-center justify-center gap-4 mt-6"
+              transition={{ delay: 1 }}
+              className="flex gap-4 mt-6"
             >
-              {[
-                { icon: Github,    href: '#', label: 'GitHub' },
-                { icon: Linkedin,  href: '#', label: 'LinkedIn' },
-                { icon: Youtube,   href: '#', label: 'YouTube' },
-                { icon: Instagram, href: '#', label: 'Instagram' },
-              ].map((social) => (
+              {socials.map((s) => (
                 <motion.a
-                  key={social.label}
-                  href={social.href}
-                  className="p-3 rounded-full glass hover:shadow-glow transition-all duration-300"
+                  key={s.href}
+                  href={s.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={s.label}
+                  className="p-3 rounded-full bg-white/10 backdrop-blur hover:bg-white/20 transition"
                   whileHover={{ scale: 1.15, y: -3 }}
                   whileTap={{ scale: 0.95 }}
-                  aria-label={social.label}
                 >
-                  <social.icon className="h-5 w-5 text-foreground" />
+                  <s.icon className="h-5 w-5" />
                 </motion.a>
               ))}
             </motion.div>
           </motion.div>
 
-          {/* ─── RIGHT: Text Content ─── */}
+          {/* RIGHT */}
           <div className="flex-1 text-center md:text-left">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
+
+            <motion.span
+              className="inline-block px-4 py-2 rounded-full bg-white/10 text-sm mb-6"
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
             >
-              <motion.span
-                className="inline-block px-4 py-2 rounded-full glass text-sm font-medium text-primary mb-6"
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 0.2 }}
-              >
-                👋 Selamat datang di portfolio saya
-              </motion.span>
-            </motion.div>
+              👋 Selamat datang di portfolio saya
+            </motion.span>
 
             <motion.h1
+              className="text-4xl md:text-6xl font-bold mb-6"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.3 }}
-              className="font-display text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight"
             >
-              Programer Alghi
-              <br />
-              <span className="text-gradient">&amp; Content Creator</span>
+              Programmer Alghi <br />
+              <span className="text-purple-400">& Content Creator</span>
             </motion.h1>
 
             <motion.p
+              className="text-lg text-gray-400 mb-8 max-w-xl"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.5 }}
-              className="text-lg md:text-xl text-muted-foreground mb-8 max-w-xl"
             >
-              Saya membangun aplikasi web yang indah dan fungsional,
-              serta membagikan pengetahuan melalui konten yang inspiratif.
+              Saya membangun aplikasi web modern dan membagikan ilmu melalui konten kreatif.
             </motion.p>
 
             <motion.div
+              className="flex flex-col sm:flex-row gap-4"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.7 }}
-              className="flex flex-col sm:flex-row items-center md:items-start justify-center md:justify-start gap-4"
             >
-              <Button
-                size="lg"
-                className="rounded-full px-8 shadow-glow"
-                onClick={() => {
-                  const element = document.querySelector('#projects');
-                  if (element) element.scrollIntoView({ behavior: 'smooth' });
-                }}
+              <button
+                onClick={() => scrollTo("#projects")}
+                className="px-8 py-3 rounded-full bg-purple-600 hover:bg-purple-700 transition"
               >
                 Lihat Projects
-              </Button>
-              <Button
-                variant="outline"
-                size="lg"
-                className="rounded-full px-8"
-                onClick={() => {
-                  const element = document.querySelector('#contact');
-                  if (element) element.scrollIntoView({ behavior: 'smooth' });
-                }}
+              </button>
+
+              <button
+                onClick={() => scrollTo("#contact")}
+                className="px-8 py-3 rounded-full border border-gray-500 hover:bg-gray-800 transition"
               >
                 Hubungi Saya
-              </Button>
+              </button>
             </motion.div>
+
           </div>
         </div>
       </div>
 
-      {/* Scroll-down arrow */}
+      {/* Scroll button */}
       <motion.button
-        onClick={scrollToAbout}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 p-3 rounded-full glass animate-float cursor-pointer"
+        onClick={() => scrollTo("#about")}
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 p-3 rounded-full bg-white/10 backdrop-blur"
         whileHover={{ scale: 1.1 }}
-        aria-label="Scroll to About"
+        aria-label="Scroll ke About"
       >
-        <ArrowDown className="h-5 w-5 text-primary" />
+        <ArrowDown />
       </motion.button>
     </section>
   );
